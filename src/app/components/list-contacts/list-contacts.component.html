@@ -1,0 +1,60 @@
+<table>
+  <thead>
+    <tr>
+      <th class="min-w-65 w-65">Nome</th>
+      <th class="min-w-65 w-65">Telefone</th>
+      <th></th>
+    </tr>
+  </thead>
+  <!-- prettier-ignore -->
+  <tbody class="w-full">
+    @for (contact of contacts | filterContacts : filter : archives; track contact) {
+      @let formController = formData.get(contact.phone)!;
+      <tr>
+        <td class="align-top">
+          <app-input
+            type="text"
+            name="name"
+            placeholder="Nome"
+            [(ngModel)]="formController.data.name"
+            [disabled]="!formController.editing"
+            [errors]="formController.errors"
+            (input)="onInput(formController)"
+            ngModel
+          />
+        </td>
+        <td class="align-top">
+          <app-input
+            type="text"
+            name="phone"
+            placeholder="Telefone"
+            mask="(00) 00000-0000"
+            [(ngModel)]="formController.data.phone"
+            [disabled]="!formController.editing"
+            [errors]="formController.errors"
+            (input)="onInput(formController)"
+            ngModel
+          />
+        </td>
+        <td class="space-x-2 flex items-center justify-end max-sm:flex-col max-sm:gap-y-2">
+          @if (formController.editing) {
+            <button class="save-edit" (click)="edit({ contact, formController })">Salvar alteração</button>
+            <button class="cancel-edit" (click)="cancelEdit(formController)">Cancelar</button>
+          } @else if (contact.archive) {
+            <button class="archive" (click)="this.onUnarchive.emit(contact)">Desarquivar</button>
+          } @else {
+            <button class="edit" (click)="formController.editing = true">Editar</button>
+            <button class="remove" (click)="onRemove.emit(contact)">Remover</button>
+            <button class="archive" (click)="onArchive.emit(contact)">Arquivar</button>
+          }
+        </td>
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="3" class="text-center !py-3.5">
+          Nenhum contato encontrado.
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

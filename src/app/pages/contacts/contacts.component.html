@@ -1,0 +1,56 @@
+<main class="max-w-3xl mx-auto px-6 py-12">
+  <form
+    #form="ngForm"
+    (ngSubmit)="addContact(form)"
+    class="space-x-4 flex items-start"
+  >
+    <div>
+      <app-input
+        type="text"
+        name="name"
+        placeholder="Nome"
+        [(ngModel)]="formData.name"
+        (input)="onInput()"
+        [errors]="errors"
+        ngModel
+      />
+    </div>
+    <div>
+      <app-input
+        type="text"
+        name="phone"
+        placeholder="Telefone"
+        mask="(00) 00000-0000"
+        [(ngModel)]="formData.phone"
+        (input)="onInput()"
+        [errors]="errors"
+        ngModel
+      />
+    </div>
+    <button type="submit">Cadastrar</button>
+  </form>
+  <br />
+  <div class="gap-x-4 flex items-center">
+    <input
+      type="text"
+      class="w-60"
+      placeholder="Buscar"
+      [(ngModel)]="filter"
+      #ctrl="ngModel"
+    />
+    <div class="flex items-center gap-x-2 select-none">
+      <input id="archives" [(ngModel)]="archives" type="checkbox" />
+      <label for="archives">Arquivados</label>
+    </div>
+  </div>
+  <br />
+  <app-list-contacts
+    [filter]="filter"
+    [archives]="archives"
+    [contacts]="contacts"
+    (onEdit)="editContact($event)"
+    (onRemove)="removeContact($event)"
+    (onArchive)="archiveContact($event)"
+    (onUnarchive)="archiveContact($event)"
+  />
+</main>

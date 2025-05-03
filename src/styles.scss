@@ -1,0 +1,13 @@
+@use "tailwindcss";
+
+input {
+  @apply border-2 border-gray-300 rounded-md py-1 px-3 outline-none focus:border-teal-500;
+}
+
+button {
+  @apply bg-teal-500 px-4 py-1.5 rounded-md text-white cursor-pointer hover:bg-teal-600 outline-none active:bg-teal-600 transition-colors;
+}
+
+.message-error {
+  @apply text-red-500 text-sm;
+}

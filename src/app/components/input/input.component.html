@@ -1,0 +1,15 @@
+<input
+  class="w-60"
+  [type]="type"
+  [name]="name"
+  [mask]="mask"
+  [disabled]="disabled"
+  [placeholder]="placeholder"
+  [ngClass]="{ class, '!border-red-500': errors?.[name], '!border-transparent': disabled }"
+  (ngModelChange)="onChange($event)"
+  (blur)="onTouched()"
+  [(ngModel)]="value"
+/>
+@if (errors?.[name]) {
+<div class="message-error">{{ errors?.[name]?.[0] }}</div>
+}
